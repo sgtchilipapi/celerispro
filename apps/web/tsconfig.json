@@ -10,6 +10,8 @@
     "incremental": true,
     "isolatedModules": true,
     "jsx": "preserve",
+    "module": "ESNext",
+    "moduleResolution": "Bundler",
     "plugins": [
       {
         "name": "next"
@@ -25,6 +27,7 @@
     ".next/types/**/*.ts"
   ],
   "exclude": [
-    "node_modules"
+    "node_modules",
+    ".next"
   ]
 }
