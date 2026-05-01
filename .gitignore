@@ -1,0 +1,30 @@
+# Workspace dependencies
+node_modules/
+
+# Frontend build output
+.next/
+
+# Monorepo build, test, and cache output
+.turbo/
+dist/
+coverage/
+*.tsbuildinfo
+
+# Local environment files
+.env
+.env.local
+.env.*.local
+
+# Package manager logs
+npm-debug.log*
+pnpm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Anchor and Solana local artifacts
+.anchor/
+test-ledger/
+programs/game/target/*
+!programs/game/target/deploy/
+programs/game/target/deploy/*
+!programs/game/target/deploy/game-keypair.json

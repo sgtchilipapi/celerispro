@@ -1,0 +1,63 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id             String   @id @default(cuid())
+  githubUserId   String   @unique
+  githubUsername String
+  email          String?
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  projects       Project[]
+}
+
+model Project {
+  id                 String          @id @default(cuid())
+  userId             String
+  name               String
+  slug               String
+  githubOwner        String
+  githubRepo         String
+  githubRepoUrl      String
+  bootstrapStatus    BootstrapStatus @default(PENDING)
+  bootstrapCommitSha String?
+  createdAt          DateTime        @default(now())
+  updatedAt          DateTime        @updatedAt
+
+  user               User            @relation(fields: [userId], references: [id])
+  bootstrapJobs      BootstrapJob[]
+
+  @@unique([userId, slug])
+}
+
+model BootstrapJob {
+  id          String    @id @default(cuid())
+  projectId   String
+  status      JobStatus @default(PENDING)
+  error       String?
+  commitSha   String?
+  createdAt   DateTime  @default(now())
+  completedAt DateTime?
+
+  project     Project   @relation(fields: [projectId], references: [id])
+}
+
+enum BootstrapStatus {
+  PENDING
+  BOOTSTRAPPED
+  FAILED
+}
+
+enum JobStatus {
+  PENDING
+  RUNNING
+  SUCCESS
+  FAILED
+}
